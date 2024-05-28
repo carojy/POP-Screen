@@ -86,19 +86,19 @@
                     exit();
                 }
 
-                while ($tag = $lesInformations->fetch_assoc())
+                while ($lesUtilisatrices = $lesInformations->fetch_assoc())
                 {
                     //echo "<pre>" . print_r($tag, 1) . "</pre>";
                     ?>
                     <article>
-                        <h3><?php echo $tag["alias"] ?></h3>
-                        <p><?php echo $tag["id"]?></p>
+                        <h3><?php echo $lesUtilisatrices["alias"] ?></h3>
+                        <p><?php echo $lesUtilisatrices["id"]?></p>
                         <nav>
-                            <a href="wall.php?user_id=123">Mur</a>
-                            | <a href="feed.php?user_id=123">Flux</a>
-                            | <a href="settings.php?user_id=123">Paramètres</a>
-                            | <a href="followers.php?user_id=123">Suiveurs</a>
-                            | <a href="subscriptions.php?user_id=123">Abonnements</a>
+                            <a href="wall.php?user_id=<?php echo $lesUtilisatrices["id"]?>">Mur</a>
+                            | <a href="feed.php?user_id=<?php echo $lesUtilisatrices["id"]?>">Flux</a>
+                            | <a href="settings.php?user_id=<?php echo $lesUtilisatrices["id"]?>">Paramètres</a>
+                            | <a href="followers.php?user_id=<?php echo $lesUtilisatrices["id"]?>">Suiveurs</a>
+                            | <a href="subscriptions.php?user_id=<?php echo $lesUtilisatrices["id"]?>">Abonnements</a>
                         </nav>
                     </article>
                 <?php } ?>
