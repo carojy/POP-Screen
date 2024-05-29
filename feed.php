@@ -95,29 +95,30 @@
                  * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
                  * A vous de retrouver comment faire la boucle while de parcours...
                  */
-                ?>                
-                <article>
-                    <h3>
-                        <time datetime='2020-02-01 11:12:13' >31 février 2010 à 11h12</time>
-                    </h3>
-                    <address>par AreTirer</address>
-                    <div>
-                        <p>Ceci est un paragraphe</p>
-                        <p>Ceci est un autre paragraphe</p>
-                        <p>... de toutes manières il faut supprimer cet 
-                            article et le remplacer par des informations en 
-                            provenance de la base de donnée</p>
-                    </div>                                            
-                    <footer>
-                        <small>♥ 132</small>
-                        <a href="">#lorem</a>,
-                        <a href="">#piscitur</a>,
-                    </footer>
-                </article>
-                <?php
-                // et de pas oublier de fermer ici vote while
-                ?>
+                ?>   
 
+                <?php while ($post = $lesInformations->fetch_assoc())
+                {
+                ?>                
+                    <article>
+                        <h3>
+                <?php
+                    $date =new DateTime($post['created']); 
+                    //strftime('%d-%m-%Y',strtotime($date));
+                ?>
+                            <time><?php echo $date->format('l jS \o\f F Y h:i:s A'), "\n";?></time>
+                        </h3>
+                        <address>De <?php echo $post["author_name"] ?></address>
+                        <div>
+                        
+                            <p><?php echo $post["content"] ?></p>
+                        </div>                                            
+                        <footer>
+                            <small>♥ <?php echo $post["like_number"] ?></small>
+                            <a href="">#<?php echo $post["taglist"] ?></a>
+                        </footer>
+                    </article>
+                <?php } ?>
 
             </main>
         </div>

@@ -84,9 +84,6 @@
                     echo("Échec de la requete : " . $mysqli->error);
                 }
 
-                /**
-                 * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
-                 */
                 while ($post = $lesInformations->fetch_assoc())
                 {
 
@@ -109,8 +106,7 @@
                         </div>                                            
                         <footer>
                             <small>♥ <?php echo $post["like_number"] ?></small>
-                            <a href="">#<?php echo $post["taglist"] ?></a>,
-                            <a href="">#piscitur</a>,
+                            <a href="">#<?php echo $post["taglist"] ?></a>
                         </footer>
                     </article>
                 <?php } ?>
