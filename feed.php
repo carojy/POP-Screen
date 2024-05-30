@@ -13,7 +13,7 @@
                 <a href="news.php">Actualités</a>
                 <a href="wall.php?user_id=5">Mur</a>
                 <a href="feed.php?user_id=5">Flux</a>
-                <a href="tags.php?tag_id=1">Mots-clés</a>
+                <a href="tags.php?tag_id=5">Mots-clés</a>
             </nav>
             <nav id="user">
                 <a href="#">Profil</a>
@@ -72,7 +72,8 @@
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
-                    users.alias as author_name,  
+                    users.alias as author_name, 
+                    users.id as author_id, 
                     count(likes.id) as like_number,  
                     GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                     FROM followers 
@@ -91,10 +92,7 @@
                     echo("Échec de la requete : " . $mysqli->error);
                 }
 
-                /**
-                 * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
-                 * A vous de retrouver comment faire la boucle while de parcours...
-                 */
+                //Etape 4 : afficher les posts du flux
                 ?>   
 
                 <?php while ($post = $lesInformations->fetch_assoc())
@@ -105,10 +103,12 @@
                 <?php
                     $date =new DateTime($post['created']); 
                     //strftime('%d-%m-%Y',strtotime($date));
+                    echo "<pre>" . print_r($post, 1) . "</pre>";
+                
                 ?>
                             <time><?php echo $date->format('l jS \o\f F Y h:i:s A'), "\n";?></time>
                         </h3>
-                        <address>De <?php echo $post["author_name"] ?></address>
+                        <address><a href="wall.php?user_id=<?php echo $post["author_id"] ?>">De <?php echo $post["author_name"] ?></a></address>
                         <div>
                         
                             <p><?php echo $post["content"] ?></p>

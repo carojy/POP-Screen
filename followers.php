@@ -53,14 +53,20 @@
                     GROUP BY users.id
                     ";
                 include("sources/library.php");
-                // Etape 4: à vous de jouer
-                //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
+                
+                // Etape 4: afficher les followers du profil
+               
                 ?>
+                <?php while ($followers = $lesInformations->fetch_assoc())
+                {?>
                 <article>
                     <img src="user.jpg" alt="blason"/>
-                    <h3>Béatrice</h3>
-                    <p>id:321</p>
-                </article>
+                    <h3><?php echo $followers["alias"] ?></h3>
+                    <p><?php echo $followers["id"] ?></p> 
+                </article>   
+
+                <?php } ?>
+
             </main>
         </div>
     </body>

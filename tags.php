@@ -91,7 +91,7 @@
                 }
 
                 /**
-                 * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
+                 * Etape 4: afficher les tags 
                  */
                 while ($post = $lesInformations->fetch_assoc())
                 {

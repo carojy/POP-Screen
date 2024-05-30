@@ -56,14 +56,14 @@
                     ";
                 include("sources/library.php");
                 // Etape 4: à vous de jouer
-                //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
+        
                 ?>
-                <?php while ($followers = $lesInformations->fetch_assoc())
+                <?php while ($subscript = $lesInformations->fetch_assoc())
                 {?>
                 <article>
                     <img src="user.jpg" alt="blason"/>
-                    <h3><?php echo $followers["alias"] ?></h3>
-                    <p><?php echo $followers["id"] ?></p> 
+                    <h3><?php echo $subscript["alias"] ?></h3>
+                    <p><?php echo $subscript["id"] ?></p> 
                 </article>                
                 <?php } ?>
                 
