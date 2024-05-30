@@ -76,12 +76,14 @@
                     echo("Échec de la requete : " . $mysqli->error);
                 }
                 $user = $lesInformations->fetch_assoc();
+                
+                //echo "<pre>" . print_r($user, 1) . "</pre>";
+               
+               ?>                
 
                 
                 
-                //echo "<pre>" . print_r($user, 1) . "</pre>";
                 
-                ?>                
                 <article class='parameters'>
                     <h3>Mes paramètres</h3>
                     <dl>
