@@ -108,7 +108,7 @@
                 ?>
                             <time><?php echo $date->format('l jS \o\f F Y h:i:s A'), "\n";?></time>
                         </h3>
-                        <address><a href="wall.php?user_id=<?php echo $post["author_id"] ?>">De <?php echo $post["author_name"] ?></a></address>
+                        <address>De <a href="wall.php?user_id=<?php echo $post["author_id"] ?>"><?php echo $post["author_name"] ?></a></address>
                         <div>
                         
                             <p><?php echo $post["content"] ?></p>

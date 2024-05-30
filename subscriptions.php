@@ -62,7 +62,7 @@
                 {?>
                 <article>
                     <img src="user.jpg" alt="blason"/>
-                    <h3><?php echo $subscript["alias"] ?></h3>
+                    <h3><a href="wall.php?user_id=<?php echo $subscript["id"]?>"><?php echo $subscript["alias"] ?></a></h3>
                     <p><?php echo $subscript["id"] ?></p> 
                 </article>                
                 <?php } ?>

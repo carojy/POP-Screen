@@ -63,7 +63,9 @@
                     SELECT posts.content,
                     posts.created,
                     users.alias as author_name,
-                    users.id as author_id,  
+                    users.id as author_id,
+                    posts_tags.post_id as post_id,
+                    posts_tags.tag_id as tag_id,  
                     count(likes.id) as like_number,  
                     GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                     FROM posts
@@ -95,16 +97,21 @@
 
                     ?>
                     <article>
+                    <?php
+                    $date =new DateTime($post['created']); 
+                    //strftime('%d-%m-%Y',strtotime($date));
+                    //echo "<pre>" . print_r($post, 1) . "</pre>";
+                    ?>
                         <h3>
-                            <time><?php echo $post['created'] ?></time>
+                            <time><?php echo $date->format('l jS \o\f F Y h:i:s A'), "\n";?></time>
                         </h3>
                         <address><a href="wall.php?user_id=<?php echo $post["author_id"] ?>"><?php echo $post['author_name'] ?></a></address>
                         <div>
                             <p><?php echo $post['content'] ?></p>
                         </div>
                         <footer>
-                            <small><?php echo $post['like_number'] ?>♥</small>
-                            <a href="<?php echo $post['taglist'] ?>"><?php echo $post['taglist'] ?></a>,
+                            <small>♥ <?php echo $post['like_number'] ?></small>
+                            <a href="tags.php?tag_id=<?php echo $post['tag_id'] ?>">#<?php echo $post['taglist'] ?></a>
                         </footer>
                     </article>
                     <?php
