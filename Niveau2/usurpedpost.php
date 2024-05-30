@@ -43,13 +43,14 @@ session_start();
                     /**
                      * BD
                      */
-                    $mysqli = new mysqli("localhost", "root", "root", "socialnetwork_tests");
+                    //Connexion avec la base de donnée
+                    include("../sources/connexion.php");
                     /**
                      * Récupération de la liste des auteurs
                      */
                     $listAuteurs = [];
                     $laQuestionEnSql = "SELECT * FROM users";
-                    $lesInformations = $mysqli->query($laQuestionEnSql);
+                    include("../sources/library.php");
                     while ($user = $lesInformations->fetch_assoc())
                     {
                         $listAuteurs[$user['id']] = $user['alias'];
@@ -69,8 +70,8 @@ session_start();
                         // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
                         echo "<pre>" . print_r($_POST, 1) . "</pre>";
                         // et complétez le code ci dessous en remplaçant les ???
-                        $authorId = $_POST['???'];
-                        $postContent = $_POST['???'];
+                        $authorId = $_POST['auteur'];
+                        $postContent = $_POST['message'];
 
 
                         //Etape 3 : Petite sécurité
