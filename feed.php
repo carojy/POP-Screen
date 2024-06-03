@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -36,6 +39,11 @@
              * Etape 1: Le mur concerne un utilisateur en particulier
              */
             $userId = intval($_GET['user_id']);
+        
+            
+            $user_connectedID =$_SESSION['connected_id'];
+            echo "connectedID = " . $user_connectedID; 
+            echo "userID = " . $userId;
             ?>
 
             <?php

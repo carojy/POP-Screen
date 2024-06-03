@@ -8,6 +8,7 @@ session_start();
         <title>ReSoC - Connexion</title> 
         <meta name="author" content="Julien Falconnet">
         <link rel="stylesheet" href="style.css"/>
+      
     </head>
     <body>
         <header>
@@ -15,7 +16,7 @@ session_start();
             <nav id="menu">
                 <a href="news.php">Actualités</a>
                 <a href="wall.php?user_id=5">Mur</a>
-                <a href="feed.php?user_id=5">Flux</a>
+                <a href="/resoc_n1/projet-collectif-r-seau-social-php-cmc-project/feed.php?user_id=<?php echo $_SESSION['connected_id']; ?>">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
             </nav>
             <nav id="user">
@@ -47,13 +48,11 @@ session_start();
                     $enCoursDeTraitement = isset($_POST['email']);
                     if ($enCoursDeTraitement)
                     {
-                        // on ne fait ce qui suit que si un formulaire a été soumis.
-                        // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
-                        // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
-                        echo "<pre>" . print_r($_POST, 1) . "</pre>";
-                        // et complétez le code ci dessous en remplaçant les ???
-                        $emailAVerifier = $_POST['???'];
-                        $passwdAVerifier = $_POST['???'];
+                       
+                        //echo "<pre>" . print_r($_POST, 1) . "</pre>";
+                        
+                        $emailAVerifier = $_POST['email'];
+                        $passwdAVerifier = $_POST['motpasse'];
 
 
                         //Connexion avec la base de donnée
