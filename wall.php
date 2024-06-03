@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="fr">
     <head>
@@ -7,24 +8,9 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-        <header>
-            <img src="resoc.jpg" alt="Logo de notre réseau social"/>
-            <nav id="menu">
-                <a href="news.php">Actualités</a>
-                <a href="wall.php?user_id=5">Mur</a>
-                <a href="feed.php?user_id=5">Flux</a>
-                <a href="tags.php?tag_id=1">Mots-clés</a>
-            </nav>
-            <nav id="user">
-                <a href="#">Profil</a>
-                <ul>
-                    <li><a href="settings.php?user_id=5">Paramètres</a></li>
-                    <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
-                    <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
-                </ul>
-
-            </nav>
-        </header>
+    <?php
+        include("sources/header.php");
+    ?>
         <div id="wrapper">
             <?php
             /**
@@ -34,7 +20,12 @@
              * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
              * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
              */
-            $userId =intval($_GET['user_id']);
+            //$userId =intval($_GET['user_id']);
+
+            $user_connectedID =$_SESSION['connected_id'];
+            echo "connectedID = " . $user_connectedID; 
+            //echo "userID = " . $userId;
+
             ?>
             
             <?php
@@ -47,7 +38,7 @@
                 /**
                  * Etape 3: récupérer le nom de l'utilisateur
                  */                
-                $laQuestionEnSql = "SELECT * FROM users WHERE id= '$userId' ";
+                $laQuestionEnSql = "SELECT * FROM users WHERE id= '$user_connectedID' ";
                 include("sources/library.php");
                 $user = $lesInformations->fetch_assoc();
                 
@@ -57,7 +48,7 @@
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user["alias"] ?>
-                        (n° <?php echo $userId ?>)
+                        (n° <?php echo $user_connectedID ?>)
                     </p>
                 </section>
             </aside>
@@ -78,7 +69,7 @@
                     LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
                     LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
                     LEFT JOIN likes      ON likes.post_id  = posts.id 
-                    WHERE posts.user_id='$userId' 
+                    WHERE posts.user_id='$user_connectedID' 
                     GROUP BY posts.id
                     ORDER BY posts.created DESC  
                     ";
@@ -114,7 +105,62 @@
                         </footer>
                     </article>
                 <?php } ?>
+                <article>
+                    <h2>Poster un message</h2>
+                    <?php
 
+                    $enCoursDeTraitement = isset($_POST['author_name']);
+                    if ($enCoursDeTraitement)
+                    {
+                        // on ne fait ce qui suit que si un formulaire a été soumis.
+                        // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
+                        // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
+                        echo "<pre>" . print_r($_POST, 1) . "</pre>";
+                        // et complétez le code ci dessous en remplaçant les ???
+                        //$authorId = $_POST['auteur'];
+                        $postContent = $_POST['message'];
+
+
+                        //Etape 3 : Petite sécurité
+                        // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
+                        //$authorId = intval($mysqli->real_escape_string($authorId));
+                        $postContent = $mysqli->real_escape_string($postContent);
+                        //Etape 4 : construction de la requete
+                        $lInstructionSql = "INSERT INTO posts "
+                                . "(id, user_id, content, created) "
+                                . "VALUES (NULL, "
+                                . $user_connectedID . ", "
+                                . "'" . $postContent . "', "
+                                . "NOW())";
+
+                        echo $lInstructionSql;
+                        // Etape 5 : execution
+                        $ok = $mysqli->query($lInstructionSql);
+                        if ( ! $ok)
+                        {
+                            echo "Impossible d'ajouter le message: " . $mysqli->error;
+                        } else
+                        {
+                            echo "Message posté en tant que :" . $user_connectedID;
+                        }
+                    }
+                    ?>                     
+                    <form action="wall.php" method="post">
+                        <input type='hidden' name='???' value='achanger'>
+                        <dl>
+                            <dt><label for='auteur'>Auteur</label></dt>
+                            <dd><select name='auteur'>
+                                    <?php
+                                    //foreach ($listAuteurs as $id => $alias)
+                                    //    echo "<option value='$id'>$alias</option>";
+                                    ?>
+                                </select></dd>
+                            <dt><label for='message'>Message</label></dt>
+                            <dd><textarea name='message'></textarea></dd>
+                        </dl>
+                        <input type='submit'>
+                    </form>               
+                </article>
 
             </main>
         </div>
