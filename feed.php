@@ -8,58 +8,56 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-    <?php
-        include("sources/header.php");
-    ?>
-        <div id="wrapper">
-            <?php
-            /**
-             * Cette page est TRES similaire à wall.php. 
-             * Vous avez sensiblement à y faire la meme chose.
-             * Il y a un seul point qui change c'est la requete sql.
-             */
-            /**
-             * Etape 1: Le mur concerne un utilisateur en particulier
-             */
-            $userId = intval($_GET['user_id']);
         
-            
-            $user_connectedID =$_SESSION['connected_id'];
-            echo "connectedID = " . $user_connectedID; 
-            echo "userID = " . $userId;
-            ?>
-
-            <?php
-            /** Etape 2: se connecter à la base de donnée*/
+        <?php
+            //ajout du header
+            include("sources/header.php");
+        
+            //connexion à la base de donnée MySQL
             include("sources/connexion.php");
-            ?>
+
+            //vérification connexion ok
+            if ($mysqli->connect_errno)
+            {
+            echo("Échec de la connexion : " . $mysqli->connect_error);
+            exit();
+            }
+        ?>
+        
+        <div id="wrapper">
 
             <aside>
                 <?php
-                /**
-                 * Etape 3: récupérer le nom de l'utilisateur
-                 */
-                $laQuestionEnSql = "SELECT * FROM `users` WHERE id= '$userId' ";
-                include("sources/library.php");
-                $user = $lesInformations->fetch_assoc();
+                //Le mur concerne un utilisateur en particulier
+                $userId = intval($_GET['user_id']);
+                $user_connectedID = $_SESSION['connected_id'];
+                //echo "userID = " . $userId;
+                //echo "connectedID = " . $user_connectedID; 
                 
+                //sélectionner toutes les colonnes dans la table users, de l'utilisateur connecté
+                $laQuestionEnSql = "SELECT * FROM `users` WHERE id= '$userId' ";
+                
+                //exécution de la requête mySQL contenue dans la variable $laQuestionEnSql
+                include("sources/library.php");
+                
+                $user = $lesInformations->fetch_assoc();
                 //echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>
+
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez tous les message des utilisatrices
                         auxquel est abonnée l'utilisatrice <a href="wall.php?user_id=<?php echo $user["id"] ?>"><?php echo $user["alias"] ?></a>
                         (n° <?php echo $userId ?>)
                     </p>
-
                 </section>
             </aside>
+            
             <main>
                 <?php
-                /**
-                 * Etape 3: récupérer tous les messages des abonnements
-                 */
+                //récupérer tous les messages des utilisateurs auxquel est abonné l'utilisateur connecté
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
@@ -77,40 +75,48 @@
                     GROUP BY posts.id
                     ORDER BY posts.created DESC  
                     ";
+                
+                //exécution de la requête mySQL contenue dans la variable $laQuestionEnSql
                 include("sources/library.php");
+                
+                //vérification requête ok
                 if ( ! $lesInformations)
                 {
                     echo("Échec de la requete : " . $mysqli->error);
                 }
 
-                //Etape 4 : afficher les posts du flux
-                ?>   
-
-                <?php while ($post = $lesInformations->fetch_assoc())
+                //affiche le résultat de la requête : les posts du flux
+                while ($post = $lesInformations->fetch_assoc())
                 {
+                //echo "<pre>" . print_r($post, 1) . "</pre>";
                 ?>                
                     <article>
                         <h3>
-                <?php
-                    $date =new DateTime($post['created']); 
-                    //strftime('%d-%m-%Y',strtotime($date));
-                    //echo "<pre>" . print_r($post, 1) . "</pre>";
-                
-                ?>
+                            <?php
+                            //affiche la date de création du post
+                            $date =new DateTime($post['created']); 
+                            //strftime('%d-%m-%Y',strtotime($date));
+                            ?>
                             <time><?php echo $date->format('l jS \o\f F Y h:i:s A'), "\n";?></time>
                         </h3>
-                        <address>De <a href="wall.php?user_id=<?php echo $post["author_id"] ?>"><?php echo $post["author_name"] ?></a></address>
-                        <div>
                         
+                        <address> 
+                            De 
+                            <a href="wall.php?user_id=<?php echo $post["author_id"] ?>">
+                            <?php echo $post["author_name"] ?>
+                            </a>
+                        </address>
+                        
+                        <div>
                             <p><?php echo $post["content"] ?></p>
-                        </div>                                            
+                        </div>
+
                         <footer>
                             <small>♥ <?php echo $post["like_number"] ?></small>
                             <a href="">#<?php echo $post["taglist"] ?></a>
                         </footer>
                     </article>
                 <?php } ?>
-
             </main>
         </div>
     </body>

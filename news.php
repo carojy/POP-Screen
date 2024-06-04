@@ -7,44 +7,40 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-    <?php
+        <?php
+        //ajout du header
         include("sources/header.php");
-    ?>
+        
+        //connexion à la base de donnée MySQL
+        include("sources/connexion.php");
+        
+        //vérification connexion ok
+        if ($mysqli->connect_errno)
+        {
+            echo "<article>";
+            echo("Échec de la connexion : " . $mysqli->connect_error);
+            echo("<p>Indice: Vérifiez les parametres de <code>new mysqli(...</code></p>");
+            echo "</article>";
+            exit();
+        }
+        ?>
+
         <div id="wrapper">
+            
             <aside>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les derniers messages de
-                        tous les utilisatrices du site.</p>
+                        tous les utilisatrices du site.
+                    </p>
                 </section>
             </aside>
+
             <main>
                 <?php
-                /*
-                  // C'est ici que le travail PHP commence
-                  // Votre mission si vous l'acceptez est de chercher dans la base
-                  // de données la liste des 5 derniers messsages (posts) et
-                  // de l'afficher
-                  // Documentation : les exemples https://www.php.net/manual/fr/mysqli.query.php
-                  // plus généralement : https://www.php.net/manual/fr/mysqli.query.php
-                 */
-
-                include("sources/connexion.php");
-                
-                //verification
-                if ($mysqli->connect_errno)
-                {
-                    echo "<article>";
-                    echo("Échec de la connexion : " . $mysqli->connect_error);
-                    echo("<p>Indice: Vérifiez les parametres de <code>new mysqli(...</code></p>");
-                    echo "</article>";
-                    exit();
-                }
-
-                // Etape 2: Poser une question à la base de donnée et récupérer ses informations
-                // cette requete vous est donnée, elle est complexe mais correcte, 
-                // si vous ne la comprenez pas c'est normal, passez, on y reviendra
+                //requête mySQL à la base de données et récupérer ses informations
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
@@ -63,8 +59,11 @@
                     ORDER BY posts.created DESC  
                     LIMIT 5
                     ";
+                
+                //exécution de la requête mySQL contenue dans la variable $laQuestionEnSql
                 include("sources/library.php");
-                // Vérification
+                
+                //vérification requête ok
                 if ( ! $lesInformations)
                 {
                     echo "<article>";
@@ -73,37 +72,36 @@
                     exit();
                 }
 
-                // Etape 3: Parcourir ces données et les ranger bien comme il faut dans du html
-                // NB: à chaque tour du while, la variable post ci dessous reçois les informations du post suivant.
+                //affiche le résultat de la requête : les derniers posts de tous les utilisateurs du site
+                //à chaque tour du while, la variable post ci dessous reçois les informations du post suivant.
                 while ($post = $lesInformations->fetch_assoc())
                 {
-                    //la ligne ci-dessous doit etre supprimée mais regardez ce 
-                    //qu'elle affiche avant pour comprendre comment sont organisées les information dans votre 
-                    //echo "<pre>" . print_r($post, 1) . "</pre>";
-
-                    ?>
+                //echo "<pre>" . print_r($post, 1) . "</pre>";
+                ?>
                     <article>
-                    <?php
-                    $date =new DateTime($post['created']); 
-                    //strftime('%d-%m-%Y',strtotime($date));
-                    //echo "<pre>" . print_r($post, 1) . "</pre>";
-                    ?>
                         <h3>
+                            <?php
+                            //affiche la date de création du post
+                            $date =new DateTime($post['created']); 
+                            //strftime('%d-%m-%Y',strtotime($date));
+                            ?>
                             <time><?php echo $date->format('l jS \o\f F Y h:i:s A'), "\n";?></time>
                         </h3>
-                        <address><a href="wall.php?user_id=<?php echo $post["author_id"] ?>"><?php echo $post['author_name'] ?></a></address>
+                        
+                        <address>
+                            <a href="wall.php?user_id=<?php echo $post["author_id"] ?>"><?php echo $post['author_name'] ?></a>
+                        </address>
+                        
                         <div>
                             <p><?php echo $post['content'] ?></p>
                         </div>
+                        
                         <footer>
                             <small>♥ <?php echo $post['like_number'] ?></small>
                             <a href="tags.php?tag_id=<?php echo $post['tag_id'] ?>">#<?php echo $post['taglist'] ?></a>
                         </footer>
                     </article>
-                    <?php
-                }
-                ?>
-
+                <?php } ?>
             </main>
         </div>
     </body>

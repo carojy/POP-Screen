@@ -13,7 +13,7 @@
             //ajout du header
             include("sources/header.php");
 
-            //connexion à la base de donnée
+            //connexion à la base de donnée MySQL
             include("sources/connexion.php");
 
             //vérification connexion ok
@@ -30,10 +30,10 @@
                 <h2>Mots-clés</h2>
                 
                 <?php
-                //sélectionner tous les mots clés de la table tags dans la BDD
+                //sélectionner toutes les colonnes de la table tags et limité le résultat à 50 lignes
                 $laQuestionEnSql = "SELECT * FROM `tags` LIMIT 50";
                 
-                //connexion $mysqli à la BDD
+                //exécution de la requête mySQL contenue dans la variable $laQuestionEnSql
                 include("sources/library.php");
                 
                 //vérification requête ok
@@ -42,7 +42,8 @@
                     echo("Échec de la requete : " . $mysqli->error);
                     exit();
                 }
-
+                
+                //affiche le résultat de la requête
                 while ($tag = $lesInformations->fetch_assoc())
                 {
                 //echo "<pre>" . print_r($tag, 1) . "</pre>";
@@ -51,7 +52,7 @@
                         <h3>#<?php echo $tag["label"] ?></h3>
                         <p><?php echo $tag["id"]?></p>
                         <nav>
-                            <a href="tags.php?tag_id=321">Messages</a>
+                            <a href="tags.php?tag_id=<?php echo $tag["id"]?>">Messages</a>
                         </nav>
                     </article>
                 <?php } ?>
@@ -61,10 +62,10 @@
                 <h2>Utilisatrices</h2>
                 
                 <?php
-                //sélectionner toutes les infos utilisateurs de la table users dans la BDD
+                //sélectionner toutes les colonnes de la table users et limité le résultat à 50 lignes
                 $laQuestionEnSql = "SELECT * FROM `users` LIMIT 50";
                 
-                //connexion $mysqli à la BDD
+                //exécution de la requête mySQL contenue dans la variable $laQuestionEnSql
                 include("sources/library.php");
                 
                 //vérification requête ok
@@ -73,7 +74,8 @@
                     echo("Échec de la requete : " . $mysqli->error);
                     exit();
                 }
-
+                
+                //affiche le résultat de la requête
                 while ($lesUtilisatrices = $lesInformations->fetch_assoc())
                 {
                 //echo "<pre>" . print_r($tag, 1) . "</pre>";

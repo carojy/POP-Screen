@@ -70,7 +70,7 @@
                     GROUP BY posts.id
                     ORDER BY posts.created DESC  
                     ";
-                include("library.php");
+                include("sources/library.php");
                 if ( ! $lesInformations)
                 {
                     echo("Échec de la requete : " . $mysqli->error);
