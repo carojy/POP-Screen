@@ -92,10 +92,13 @@
                             echo "cool un nouveau friend :";
                         }
                     }
-                    ?>                     
+                    ?> 
+                <?php 
+                if (isset($_GET['user_id']))
+                {?>
                     <form action="wall.php" method="post">
-                        <input type='hidden' name='jeVeuxTeSuivre' value="<?php echo $_SESSION['connected_id']?>"> 
-                        <input type='hidden' name='tuMeSuis' value="<?php echo $_GET['user_id']?>">
+                        <input type='hidden' name='tuMeSuis' value="<?php echo $_SESSION['connected_id']?>"> 
+                        <input type='hidden' name='jeVeuxTeSuivre' value="<?php echo $_GET['user_id']?>">
                         <!-- <dl> -->
                             <!--<dt><label for='auteur'>Auteur</label></dt>
                              <dd>
@@ -109,7 +112,10 @@
                             <dd><textarea name='message'></textarea></dd>
                         </dl> -->
                         <input type='submit' value="&#x1F984 Abonne Toi &#x1F440"></input> 
-                    </form>               
+                    </form> 
+            <?php
+        }
+        ?>       
                 </article>
             </aside>
 
@@ -208,12 +214,12 @@
                             echo "Impossible d'ajouter le message: " . $mysqli->error;
                         } else
                         {
-                            echo "Message posté en tant que :" . $user_connectedID;
+                            echo "Message posté en tant que :" . $user_wall_id;
                         }
                     }
                     ?>                     
                     <form action="wall.php" method="post">
-                        <input type='hidden' name='author_id' value="<?php echo $user_connectedID ?>">
+                        <input type='hidden' name='author_id' value="<?php echo $user_wall_id ?>">
                         <dl>
                             <!--<dt><label for='auteur'>Auteur</label></dt>
                              <dd>
