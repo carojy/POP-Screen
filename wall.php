@@ -23,7 +23,7 @@
             //$userId =intval($_GET['user_id']);
 
             $user_connectedID =$_SESSION['connected_id'];
-            echo "connectedID = " . $user_connectedID; 
+            //echo "connectedID = " . $user_connectedID; 
             //echo "userID = " . $userId;
 
             ?>
@@ -108,22 +108,22 @@
                 <article>
                     <h2>Poster un message</h2>
                     <?php
-
-                    $enCoursDeTraitement = isset($_POST['author_name']);
+                    //echo "<pre>" . print_r($_POST, 1) . "</pre>";
+                    $enCoursDeTraitement = isset($_POST['author_id']);
                     if ($enCoursDeTraitement)
                     {
                         // on ne fait ce qui suit que si un formulaire a été soumis.
                         // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
                         // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
-                        echo "<pre>" . print_r($_POST, 1) . "</pre>";
+                        
                         // et complétez le code ci dessous en remplaçant les ???
-                        //$authorId = $_POST['auteur'];
+                        $user_connectedID = $_POST['author_id'];
                         $postContent = $_POST['message'];
 
 
                         //Etape 3 : Petite sécurité
                         // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
-                        //$authorId = intval($mysqli->real_escape_string($authorId));
+                        $user_connectedID = intval($mysqli->real_escape_string($user_connectedID));
                         $postContent = $mysqli->real_escape_string($postContent);
                         //Etape 4 : construction de la requete
                         $lInstructionSql = "INSERT INTO posts "
@@ -133,7 +133,7 @@
                                 . "'" . $postContent . "', "
                                 . "NOW())";
 
-                        echo $lInstructionSql;
+                        //echo $lInstructionSql;
                         // Etape 5 : execution
                         $ok = $mysqli->query($lInstructionSql);
                         if ( ! $ok)
@@ -146,15 +146,16 @@
                     }
                     ?>                     
                     <form action="wall.php" method="post">
-                        <input type='hidden' name='???' value='achanger'>
+                        <input type='hidden' name='author_id' value="<?php echo $user_connectedID ?>">
                         <dl>
-                            <dt><label for='auteur'>Auteur</label></dt>
-                            <dd><select name='auteur'>
+                            <!--<dt><label for='auteur'>Auteur</label></dt>
+                             <dd>
+                                <select name='auteur'>
                                     <?php
                                     //foreach ($listAuteurs as $id => $alias)
                                     //    echo "<option value='$id'>$alias</option>";
                                     ?>
-                                </select></dd>
+                                </select></dd> -->
                             <dt><label for='message'>Message</label></dt>
                             <dd><textarea name='message'></textarea></dd>
                         </dl>
