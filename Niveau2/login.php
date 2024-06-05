@@ -20,8 +20,9 @@
         <div id="wrapper" >
 
             <aside>
-                <h2>Présentation</h2>
-                <p>Bienvenu sur notre réseau social.</p>
+                <h2>Bienvenue chez PopScreen</h2>
+                <p>Un réseau social dédié aux amateurs de films et de séries, 
+                en mettant l'accent sur la communauté, le partage et la découverte.</p>
             </aside>
             
             <main>

@@ -59,7 +59,7 @@
             </aside>
 
             <main>
-                <h2>Utilisatrices</h2>
+                <h2>Pop Screeners</h2>
                 
                 <?php
                 //sélectionner toutes les colonnes de la table users et limité le résultat à 50 lignes

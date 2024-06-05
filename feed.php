@@ -48,9 +48,9 @@
                 
                 <section>
                     <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez tous les message des utilisatrices
-                        auxquel est abonnée l'utilisatrice <a href="wall.php?user_id=<?php echo $user["id"] ?>"><?php echo $user["alias"] ?></a>
-                        (n° <?php echo $userId ?>)
+                    <p>Sur cette page vous trouverez tous les message des pop screeners que vous suivez,
+                        <a href="wall.php?user_id=<?php echo $user["id"] ?>"><?php echo $user["alias"] ?></a>
+                        <!-- n° <?php //echo $userId ?> -->
                     </p>
                 </section>
             </aside>
@@ -113,7 +113,10 @@
 
                         <footer>
                             <small>♥ <?php echo $post["like_number"] ?></small>
-                            <a href="">#<?php echo $post["taglist"] ?></a>
+                            <a href="tags.php?tag_id=<?php echo $post['taglist'] ?>">
+                            #
+                            <?php echo $post["taglist"] ?>
+                            </a>
                         </footer>
                     </article>
                 <?php } ?>

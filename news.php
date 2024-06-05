@@ -33,7 +33,7 @@
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les derniers messages de
-                        tous les utilisatrices du site.
+                        tous les pop screeners
                     </p>
                 </section>
             </aside>

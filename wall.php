@@ -35,7 +35,7 @@
 
             <aside>
                 <?php
-                 //sélectionner dans la table users l'utilisateur connecté             
+                 //sélectionner dans la table users, l'utilisateur connecté             
                 $laQuestionEnSql = "SELECT * FROM users WHERE id= '$user_wall_id' ";
                 
                 //exécution de la requête mySQL contenue dans la variable $laQuestionEnSql
@@ -45,12 +45,12 @@
                 //echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>
 
-                <img src="avatar.png" alt="Portrait de l'utilisatrice"/>
+                <img src="avatar.png" alt="Portrait du pop screener connecté"/>
                 
                 <section>
                     <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user["alias"] ?>
-                        (n° <?php echo $user_wall_id ?>)
+                    <p>Sur cette page vous trouverez tous les messages de <?php echo $user["alias"] ?>
+                        <!-- (n° <?php //echo $user_wall_id ?>) -->
                     </p>
                 </section>
                 
@@ -58,6 +58,7 @@
                     <?php
                     //echo "<pre>" . print_r($_POST, 1) . "</pre>";
 
+                    //s'abonner à un pop screener
                     $enCoursDeTraitement = isset($_POST['jeVeuxTeSuivre']);
                     if ($enCoursDeTraitement)
                     {
@@ -77,10 +78,10 @@
                         $ok = $mysqli->query($lInstructionSql);
                         if (! $ok)
                         {
-                            echo "Impossible de suivre la personne: " . $mysqli->error;
+                            echo "Impossible de suivre ce pop screener." . $mysqli->error;
                         } else
                         {
-                            echo "Cool un nouveau friend!";
+                            echo "Cool un nouveau pop screen friend!";
                         }
                     }
 
@@ -89,7 +90,7 @@
                         <form action="wall.php" method="post">
                             <input type='hidden' name='tuMeSuis' value="<?php echo $_SESSION['connected_id']?>"> 
                             <input type='hidden' name='jeVeuxTeSuivre' value="<?php echo $_GET['user_id']?>">
-                            <input type='submit' value="&#x1F984 Abonne Toi &#x1F440"></input> 
+                            <input type='submit' value="Abonne-toi  &#127909"></input> 
                          </form> 
                     <?php } ?>       
                 </article>
@@ -193,7 +194,7 @@
                     <form action="wall.php" method="post">
                         <input type='hidden' name='author_id' value="<?php echo $user_wall_id ?>">
                         <dl>
-                            <dt><label for='message'>Message</label></dt>
+                            <dt><label for='message'></label></dt>
                             <dd><textarea name='message'></textarea></dd>
                         </dl>
                         <input type='submit'>

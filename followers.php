@@ -31,10 +31,9 @@
                 
                 <section>
                     <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez la liste des personnes qui
-                        suivent les messages de l'utilisatrice
-                        n° <?php echo intval($_GET['user_id']) ?></p>
-
+                    <p>Sur cette page vous trouverez la liste des pop screeners qui
+                        vous suivent
+                        <!-- n° <?php //echo intval($_GET['user_id']) ?></p> -->
                 </section>
             </aside>
 
