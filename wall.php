@@ -45,7 +45,7 @@
                 //echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>
 
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="avatar.png" alt="Portrait de l'utilisatrice"/>
                 
                 <section>
                     <h3>Présentation</h3>

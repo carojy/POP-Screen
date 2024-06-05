@@ -1,44 +1,54 @@
 body{
-    background-color: #fff;
+    background-color: rgb(6, 6, 55);
     font-family: Arial;
+    cursor:url('clap.png'), auto;
 }
 
 a{text-decoration: none; color:black;}
 a:hover{text-decoration: underline;}
 
 body>header{
-    background-color: #fff;
+    
     display:flex;
     width:80em;
     margin:0 auto 2em auto;    
     padding:0;
 
 }
-body>header img{
-    height:5em;
+
+ #logo{
+height: 5em;
+margin-top:20px ;
 }
+
 body>header #menu {
     display:flex;
     width:50%;
     align-items: stretch;
-    border-left: 1px solid #99b;
+
 }
+
+#menu a img , #user a img {
+    height: 3em;
+    margin-left: 20px;
+}
+
 body>header #menu a{
     flex:1;
     text-align: center;
     padding-top:2em;
-    border-right: 1px solid #99b;
+
 }
 body>header a:hover
 {
-    background-color: #99b;
+    font-size: larger;
 }
 body>header ul{list-style: none;}
 body>header #user
 {
     margin-left: auto;
     flex:0.2;
-    border-left: 1px solid #99b;
+
 }
 body>header #user>a{
     display:block;
@@ -107,6 +117,7 @@ body>header #user:hover ul{
 #wrapper main article time{
     float:left;
 }
+
 #wrapper main article address{
     text-align: right;
     margin-bottom: 1em;
@@ -154,7 +165,3 @@ body>header #user:hover ul{
 pre{
     color:#aaa;
 }
-
-form dl dt{float:left;font-weight: bold;line-height: 1.5em;}
-form dl dd{margin-left:10em;line-height: 1.5em;margin-bottom: 1em}
-form dl dd textarea{width:40em;height: 15em;}

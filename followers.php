@@ -27,7 +27,7 @@
         <div id="wrapper">    
 
             <aside>
-                <img src = "user.jpg" alt = "Portrait de l'utilisatrice"/>
+                <img src = "avatar.png" alt = "Portrait de l'utilisatrice"/>
                 
                 <section>
                     <h3>Présentation</h3>
@@ -60,7 +60,7 @@
                 while ($followers = $lesInformations->fetch_assoc())
                 {?>
                     <article>
-                        <img src="user.jpg" alt="blason"/>
+                        <img src="avatar.png" alt="blason"/>
                         <h3><a href="wall.php?user_id=<?php echo $followers["id"] ?>"><?php echo $followers["alias"] ?></a></h3>
                         <p><?php echo $followers["id"] ?></p> 
                     </article>   
