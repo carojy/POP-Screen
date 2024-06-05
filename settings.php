@@ -7,14 +7,19 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-    <?php
+        <?php
+        //ajout du header
         include("sources/header.php");
-    ?>
-        <div id="wrapper" class='profile'>
 
+        //connexion à la base de donnée MySQL
+        include("sources/connexion.php");
+        ?>
+
+        <div id="wrapper" class='profile'>
 
             <aside>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les informations de l'utilisatrice
@@ -22,27 +27,13 @@
 
                 </section>
             </aside>
+            
             <main>
                 <?php
-                /**
-                 * Etape 1: Les paramètres concernent une utilisatrice en particulier
-                 * La première étape est donc de trouver quel est l'id de l'utilisatrice
-                 * Celui ci est indiqué en parametre GET de la page sous la forme user_id=...
-                 * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
-                 * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
-                 */
-                // var_dump ($_GET);
-                // die();
-
+                //récupère l'id de l'utilisateur via l'URL puis le stocke dans la variable
                 $userId = intval($_GET['user_id']);
                 
-
-                /** Etape 2: se connecter à la base de donnée*/
-                include("sources/connexion.php");
-   
-                /**
-                 * Etape 3: récupérer le nom de l'utilisateur
-                 */
+                //requête mySQL à la base de données et récupérer ses informations
                 $laQuestionEnSql = "
                     SELECT users.*, 
                     count(DISTINCT posts.id) as totalpost, 
@@ -55,20 +46,19 @@
                     WHERE users.id = '$userId' 
                     GROUP BY users.id
                     ";
+                //exécution de la requête mySQL contenue dans la variable $laQuestionEnSql
                 include("sources/library.php");
+                
+                //vérification requête ok
                 if ( ! $lesInformations)
                 {
                     echo("Échec de la requete : " . $mysqli->error);
                 }
-                $user = $lesInformations->fetch_assoc();
                 
+                $user = $lesInformations->fetch_assoc();
                 //echo "<pre>" . print_r($user, 1) . "</pre>";
-               
                ?>                
 
-                
-                
-                
                 <article class='parameters'>
                     <h3>Mes paramètres</h3>
                     <dl>
@@ -83,7 +73,6 @@
                         <dt>Nombre de "J'aime" reçus</dt>
                         <dd><?php echo $user["totalrecieved"] ?></dd>
                     </dl>
-
                 </article>
             </main>
         </div>

@@ -8,9 +8,13 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-    <?php
+        <?php
+        //ajout du header
         include("../sources/header.php");
-    ?>
+
+        //connexion à la base de donnée MySQL
+        include("../sources/connexion.php");
+        ?>
 
         <div id="wrapper" >
 
@@ -19,47 +23,40 @@
                 <p>Sur cette page on peut poster un message en se faisant 
                     passer pour quelqu'un d'autre</p>
             </aside>
+
             <main>
                 <article>
                     <h2>Poster un message</h2>
                     <?php
-                    
-                    //Connexion avec la base de donnée
-                    include("../sources/connexion.php");
-                    /**
-                     * Récupération de la liste des auteurs
-                     */
+                    //Récupérer la liste des auteurs
                     $listAuteurs = [];
                     $laQuestionEnSql = "SELECT * FROM users";
+                    
+                    //exécution de la requête mySQL contenue dans la variable $laQuestionEnSql
                     include("../sources/library.php");
+                    
+                    //affiche le résultat de la requête
                     while ($user = $lesInformations->fetch_assoc())
                     {
                         $listAuteurs[$user['id']] = $user['alias'];
                     }
 
-
-                    /**
-                     * TRAITEMENT DU FORMULAIRE
-                     */
-                    // Etape 1 : vérifier si on est en train d'afficher ou de traiter le formulaire
-                    // si on recoit un champs email rempli il y a une chance que ce soit un traitement
+                    //traiter le formulaire
                     $enCoursDeTraitement = isset($_POST['auteur']);
+                    
                     if ($enCoursDeTraitement)
                     {
-                        // on ne fait ce qui suit que si un formulaire a été soumis.
-                        // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
-                        // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
-                        echo "<pre>" . print_r($_POST, 1) . "</pre>";
-                        // et complétez le code ci dessous en remplaçant les ???
+                        //récupérer ce qu'il y a dans le formulaire
+                        //echo "<pre>" . print_r($_POST, 1) . "</pre>";
                         $authorId = $_POST['auteur'];
                         $postContent = $_POST['message'];
 
 
-                        //Etape 3 : Petite sécurité
-                        // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
+                        //sécurité pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
                         $authorId = intval($mysqli->real_escape_string($authorId));
                         $postContent = $mysqli->real_escape_string($postContent);
-                        //Etape 4 : construction de la requete
+                        
+                        //requête mySQL
                         $lInstructionSql = "INSERT INTO posts "
                                 . "(id, user_id, content, created) "
                                 . "VALUES (NULL, "
@@ -67,10 +64,9 @@
                                 . "'" . $postContent . "', "
                                 . "NOW())";
 
-                        echo $lInstructionSql;
-                        // Etape 5 : execution
+                        //exécution de la requête
                         $ok = $mysqli->query($lInstructionSql);
-                        if ( ! $ok)
+                        if (! $ok)
                         {
                             echo "Impossible d'ajouter le message: " . $mysqli->error;
                         } else
@@ -79,16 +75,19 @@
                         }
                     }
                     ?>                     
+                    
                     <form action="usurpedpost.php" method="post">
                         <input type='hidden' name='???' value='achanger'>
                         <dl>
                             <dt><label for='auteur'>Auteur</label></dt>
-                            <dd><select name='auteur'>
+                            <dd>
+                                <select name='auteur'>
                                     <?php
                                     foreach ($listAuteurs as $id => $alias)
-                                        echo "<option value='$id'>$alias</option>";
+                                    echo "<option value='$id'>$alias</option>";
                                     ?>
-                                </select></dd>
+                                </select>
+                            </dd>
                             <dt><label for='message'>Message</label></dt>
                             <dd><textarea name='message'></textarea></dd>
                         </dl>
