@@ -45,7 +45,7 @@
                 //echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>
 
-                <img src="avatar.png" alt="Portrait du pop screener connecté"/>
+                <img src="sources/img/avatar.png" alt="Portrait du pop screener connecté"/>
                 
                 <section>
                     <h3>Présentation</h3>

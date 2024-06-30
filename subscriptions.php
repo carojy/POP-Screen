@@ -18,7 +18,7 @@
         <div id="wrapper">
 
             <aside>
-                <img src="avatar.png" alt="Portrait de l'utilisatrice"/>
+                <img src="sources/img/avatar.png" alt="Portrait de l'utilisatrice"/>
                 
                 <section>
                     <h3>Présentation</h3>

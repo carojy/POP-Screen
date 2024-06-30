@@ -33,7 +33,7 @@
                 //echo "<pre>" . print_r($tag, 1) . "</pre>";
                 ?>
 
-                <img src="avatar.png" alt="Portrait de l'utilisatrice"/>
+                <img src="sources/img/avatar.png" alt="Portrait de l'utilisatrice"/>
                 
                 <section>
                     <h3>Présentation</h3>

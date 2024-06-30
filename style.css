@@ -165,3 +165,16 @@ body>header #user:hover ul{
 pre{
     color:#aaa;
 }
+
+.portail {
+    margin-top: 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.portail a img {
+    width: 300px;
+}
+
